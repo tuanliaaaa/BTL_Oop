@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table( schema = "okes")
+
 public class Groupx {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

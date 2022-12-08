@@ -20,4 +20,7 @@ public class Student {
     @JsonBackReference
     @OneToMany(mappedBy = "Student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<SignSubject> SignSubject;
+    @JsonBackReference
+    @OneToMany(mappedBy = "Student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    Set<ClasssectionStudent> ClasssectionStudent;
 }

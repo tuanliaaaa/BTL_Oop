@@ -26,4 +26,7 @@ public class Classsection {
     @JsonBackReference
     @OneToMany(mappedBy = "Classsection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Schedule> Schedule;
+    @JsonBackReference
+    @OneToMany(mappedBy = "Classsection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    Set<ClasssectionStudent> ClasssectionStudent;
 }
