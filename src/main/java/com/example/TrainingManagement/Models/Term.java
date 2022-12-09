@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -13,10 +14,10 @@ public class Term {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long TermID;
     private String TermName;
-    private String StartTimeSignSubject;
-    private String EndTimeSignSubject;
-    private String StartTimeSignCredit;
-    private String EndTimeSignCredit;
+    private Timestamp StartTimeSignSubject;
+    private Timestamp EndTimeSignSubject;
+    private Timestamp StartTimeSignCredit;
+    private Timestamp EndTimeSignCredit;
     private int TermNumber;
     @JsonBackReference
     @OneToMany(mappedBy = "Term", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

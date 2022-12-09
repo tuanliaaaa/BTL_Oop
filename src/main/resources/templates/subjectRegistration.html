@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png">
+    <title>PTIT</title>
+    <link rel="stylesheet" href="/css/subjectRegistration.css">
+</head>
+<body>
+    <div id="header">
+        <div class="header__top">
+          <div class="header__logo">
+              <img  src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="loading"/>
+          </div>
+          <div class="header__title">
+              <h1><b>Học Viện Công Nghệ Bưu Chính Viễn Thông</b></h1>
+              <p><b>Posts and Telecommunications Institute of Technology</b></p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="header__navbar">
+          <div class="header__navbar__listoption">
+            <ul>
+              <a href="/CreditRegistration/subject"><li>Đăng kí môn học</li></a>
+              <a href="/CreditRegistration/credit"><li>Đăng kí tín chỉ</li></a>
+              <a href="/CreditRegistration/schedule"><li>Xem Thời Khóa Biểu</li></a>
+            </ul>
+          </div>
+          <div class="header__navbar__logout">
+            <a href="" onclick="LogOut()">Logout</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+    </div>
+    <div id="container">
+        <div class="container__fiterbysubject">
+          <form action="" id="fiterbysubject" onsubmit="GetSubjectBySubjectCodeInput()">
+            <label for="subjecttext">Lọc theo môn học: </label>
+            <input type="text" id="subjecttext" >
+            <input type="button" value="Lọc >>" onclick="GetSubjectBySubjectCodeInput()">
+          </form>
+        </div>
+        <div class="container__fiterbycondition">
+          <label for="">Lọc Theo Điều Kiện: </label>
+          <div id="fiterbycondition">
+            <select name="slmonhoc" multiple="multiple" id="selecSubject" onchange="GetMonHoc_changed()">
+              <option value="BAS1153">BAS1153 - Lịch sử Đảng cộng sản Việt Nam (2TC)</option>
+              <option value="BAS1160">BAS1160 - Tiếng Anh (Course 3 Plus) (2TC)</option>
+            </select>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="container__errornotfound" id="erornotfound">
+          <h1>Thông báo: ngoài thời gian đăng ký. Sinh viên không được chọn hoặc hiệu chỉnh môn học.</h1>
+        </div>
+        <div class="container__listSubject">
+          <table id="table__Subjectlist">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã Môn Học</th>
+                    <th>Tên Môn Học</th>           
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <script src="/js/subjectRegistration.js"></script>
+</body>
+</html>
