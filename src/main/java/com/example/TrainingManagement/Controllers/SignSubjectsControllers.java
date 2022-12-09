@@ -27,7 +27,7 @@ public class SignSubjectsControllers {
     @PostMapping("/SignSubjectBySubjectCode")
     public ResponseEntity<?> newEmployee(@RequestBody DTOSubject newSignSubject) {
         Student student = studentRepository.findAll().get(0);
-        Term term = termRepository.GetTermNow();
+        Term term = termRepository.GetTermNowBySubject();
         String studentCode=student.getStudentCode().substring(5,7);
         Major major=majorRepository.findBymajorCode(studentCode);
         Subject subject =subjectRepository.BinarySubject(newSignSubject.getSubjectCode());
@@ -44,12 +44,12 @@ public class SignSubjectsControllers {
 
         Student student = studentRepository.findAll().get(0);
         System.out.println("oke");
-        Term term = termRepository.GetTermNow();
+        Term term = termRepository.GetTermNowBySubject();
         String studentCode=student.getStudentCode().substring(5,7);
         Major major=majorRepository.findBymajorCode(studentCode);
         Subject subject =subjectRepository.BinarySubject(subjectCode);
         SubjectMajor subjectMajor =subjectMajorRepository.findBySubjectAndMajor(subject,major);
-        SignSubject signSubject =signSubjectRepository.findByAll(student,term,subjectMajor);
+        SignSubject signSubject =signSubjectRepository.findByAll(student,term,subjectMajor).get(0);
         signSubjectRepository.delete(signSubject);
         return new ResponseEntity<>("da xoa thanh cong", HttpStatus.NO_CONTENT);
     }

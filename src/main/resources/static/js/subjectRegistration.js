@@ -109,7 +109,7 @@ function GetTermSubjectStudentNear(){
             document.getElementById("table__Subjectlist").innerHTML=selecSubjectHtmls+"</tbody>";
         }
     }
-    xhttp.open("GET", "/TermSubjectStudent/api/GetTermSubjectStudentNear",false);
+    xhttp.open("GET", "/Subject/AllSubjectSignedByTermNear",false);
     token = localStorage.getItem("Token");
     authorization ='Bearer '+token
     xhttp.setRequestHeader("Authorization",authorization);

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.lang.Long;
@@ -41,10 +42,16 @@ public class SubjectsControllers {
 
     @GetMapping("/SubjectByTermNow")
     public ResponseEntity<?>  GetAllSubjectByTermNow(){
+        Term term =termRepository.GetTermNowBySubject();
         Student student = studentRepository.findAll().get(0);
         String majorCode = student.getStudentCode().substring(5,7);
         Major major = majorRepository.findBymajorCode(majorCode);
-        int year =5;
+        Calendar instance = Calendar.getInstance();
+        int year = (instance.get(Calendar.YEAR)-2000-Integer.parseInt(student.getStudentCode().substring(1,3)))*2;
+        if(term.getTermNumber()<=2){
+            year+=term.getTermNumber();
+        }
+
         List<SubjectMajor> subjectMajor= subjectMajorRepository.findByStartTermAndMajor(year, major);
         List<Subject> subjects = new ArrayList<>();
         for(SubjectMajor x : subjectMajor){
@@ -55,7 +62,7 @@ public class SubjectsControllers {
     @GetMapping("/AllSubjectSignedByTermNow")
     public ResponseEntity<?>  GetAllSubjectSignedByTermNow(){
         Student student = studentRepository.findAll().get(0);
-        Term term = termRepository.GetTermNow();
+        Term term = termRepository.GetTermNowBySubject();
         List<SignSubject> signSubject = signSubjectRepository.findAll();
         List<SubjectMajor> subjectMajors =new ArrayList<>();
         for(SignSubject x : signSubject){
@@ -71,7 +78,7 @@ public class SubjectsControllers {
     @GetMapping("/AllSubjectSignedByTermNear")
     public ResponseEntity<?> GetAllSubjectSignedByTermNear(){
         Student student = studentRepository.findAll().get(0);
-        Term term = termRepository.GetTermNear();
+        Term term = termRepository.GetTermNearSubject();
         List<SignSubject> signSubject = signSubjectRepository.findAll();
         List<SubjectMajor> subjectMajors =new ArrayList<>();
         for(SignSubject x : signSubject){

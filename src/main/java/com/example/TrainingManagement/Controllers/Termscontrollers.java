@@ -18,7 +18,7 @@ public class Termscontrollers {
     }
     @GetMapping("/TermNow")
     public Term GetAllTermNow(){
-        return termRepository.GetTermNow();
+        return termRepository.GetTermNowBySubject();
     }
 
 }

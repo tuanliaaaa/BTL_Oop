@@ -26,4 +26,5 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "StudyweekID", nullable = false)
     private Studyweek Studyweek;
+    private int LessonNumber;
 }

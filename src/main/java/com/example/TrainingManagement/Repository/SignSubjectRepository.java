@@ -7,6 +7,7 @@ import com.example.TrainingManagement.Models.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +16,16 @@ import java.util.List;
 
 @Repository
 public interface SignSubjectRepository extends JpaRepository<SignSubject, Long> {
+    @Override
+    @SuppressWarnings("unchecked")
+    default SignSubject save(SignSubject signSubject)
+    {
 
+        if(this.findByAll(signSubject.getStudent(),signSubject.getTerm(),signSubject.getSubjectMajor()).isEmpty()){
+            return saveAndFlush(signSubject);
+        }
+        return signSubject;
+    }
     public default List<SignSubject> FindByStudentAndTerm(Student student, Term term){
         ArrayList<SignSubject> list = (ArrayList<SignSubject>) this.findAll();
         ArrayList<SignSubject> signSubjects = new ArrayList<>();
@@ -27,7 +37,7 @@ public interface SignSubjectRepository extends JpaRepository<SignSubject, Long> 
         return  signSubjects;
     }
 
-    public default SignSubject findByAll(Student student, Term term, SubjectMajor subjectMajor){
+    public default List<SignSubject> findByAll(Student student, Term term, SubjectMajor subjectMajor){
         ArrayList<SignSubject> list = (ArrayList<SignSubject>) this.findAll();
         ArrayList<SignSubject> signSubjects = new ArrayList<>();
         list.forEach(signsubject -> {
@@ -35,6 +45,7 @@ public interface SignSubjectRepository extends JpaRepository<SignSubject, Long> 
                 signSubjects.add(signsubject );
             }
         });
-        return  signSubjects.get(0);
+        return  signSubjects;
     }
+
 }

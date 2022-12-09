@@ -14,6 +14,16 @@ import java.util.List;
 
 @Repository
 public interface SubjectMajorRepository extends JpaRepository<SubjectMajor, Long> {
+    public default SubjectMajor findByid(Long id){
+        ArrayList<SubjectMajor> list = (ArrayList<SubjectMajor>) this.findAll();
+        ArrayList<SubjectMajor> listRespon = new ArrayList<>();
+        list.forEach(subjectmajor -> {
+            if(subjectmajor.getSubjectMajorID().equals(id)){
+                listRespon.add(subjectmajor);
+            }
+        });
+        return  listRespon.get(0);
+    }
     public default List<SubjectMajor> findByStartTermAndMajor(int startTerm, Major major){
         ArrayList<SubjectMajor> list = (ArrayList<SubjectMajor>) this.findAll();
         ArrayList<SubjectMajor> listRespon = new ArrayList<>();
