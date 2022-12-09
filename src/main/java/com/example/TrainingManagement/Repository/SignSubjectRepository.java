@@ -2,6 +2,7 @@ package com.example.TrainingManagement.Repository;
 
 import com.example.TrainingManagement.Models.SignSubject;
 import com.example.TrainingManagement.Models.Student;
+import com.example.TrainingManagement.Models.SubjectMajor;
 import com.example.TrainingManagement.Models.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -24,5 +25,16 @@ public interface SignSubjectRepository extends JpaRepository<SignSubject, Long> 
             }
         });
         return  signSubjects;
+    }
+
+    public default SignSubject findByAll(Student student, Term term, SubjectMajor subjectMajor){
+        ArrayList<SignSubject> list = (ArrayList<SignSubject>) this.findAll();
+        ArrayList<SignSubject> signSubjects = new ArrayList<>();
+        list.forEach(signsubject -> {
+            if(signsubject.getTerm().equals(term)&& signsubject.getStudent().equals(student) && signsubject.getSubjectMajor().equals(subjectMajor)){
+                signSubjects.add(signsubject );
+            }
+        });
+        return  signSubjects.get(0);
     }
 }

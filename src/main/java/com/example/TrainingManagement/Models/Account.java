@@ -1,5 +1,6 @@
 package com.example.TrainingManagement.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Set;
@@ -14,12 +15,15 @@ public class Account {
         private Long AccountID;
         private String Username;
         private String Password;
+        @JsonIgnore
         @JsonBackReference
         @OneToMany(mappedBy = "Account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         Set<AccountGroup> AccountGroup;
+        @JsonIgnore
         @JsonBackReference
         @OneToOne(mappedBy = "Account")
         private Teacher Teacher;
+        @JsonIgnore
         @JsonBackReference
         @OneToOne(mappedBy = "Account")
         private Student Student ;

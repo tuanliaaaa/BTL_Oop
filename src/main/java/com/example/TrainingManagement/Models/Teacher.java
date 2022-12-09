@@ -18,6 +18,7 @@ public class Teacher {
     @OneToOne
     @JoinColumn(name = "AccountId")
     private Account Account;
+    @JsonIgnore
     @JsonBackReference
     @OneToMany(mappedBy = "Teacher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Classsection> Classsection;

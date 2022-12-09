@@ -24,4 +24,14 @@ public interface SubjectMajorRepository extends JpaRepository<SubjectMajor, Long
         });
         return  listRespon;
     }
+    public default SubjectMajor findBySubjectAndMajor(Subject subject, Major major){
+        ArrayList<SubjectMajor> list = (ArrayList<SubjectMajor>) this.findAll();
+        ArrayList<SubjectMajor> listRespon = new ArrayList<>();
+        list.forEach(subjectmajor -> {
+            if(subjectmajor.getSubject().equals(subject) && subjectmajor.getMajor().equals(major)){
+                listRespon.add(subjectmajor);
+            }
+        });
+        return  listRespon.get(0);
+    }
 }

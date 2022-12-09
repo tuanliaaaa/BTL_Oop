@@ -17,12 +17,14 @@ public class Student {
     private String StudentCode;
     @JsonIgnore
     @OneToOne
-
     @JoinColumn(name = "AccountId")
     private Account Account;
+    @JsonIgnore
     @JsonBackReference
     @OneToMany(mappedBy = "Student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<SignSubject> SignSubject;
+    @JsonIgnore
+
     @JsonBackReference
     @OneToMany(mappedBy = "Student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<ClasssectionStudent> ClasssectionStudent;

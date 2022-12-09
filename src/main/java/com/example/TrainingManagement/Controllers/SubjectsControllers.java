@@ -1,16 +1,15 @@
 package com.example.TrainingManagement.Controllers;
 
+import com.example.TrainingManagement.DTO.DTOSubject;
 import com.example.TrainingManagement.Models.*;
 import com.example.TrainingManagement.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.lang.Long;
 
@@ -57,8 +56,7 @@ public class SubjectsControllers {
     public ResponseEntity<?>  GetAllSubjectSignedByTermNow(){
         Student student = studentRepository.findAll().get(0);
         Term term = termRepository.GetTermNow();
-
-        List<SignSubject> signSubject = signSubjectRepository.FindByStudentAndTerm(student,term);
+        List<SignSubject> signSubject = signSubjectRepository.findAll();
         List<SubjectMajor> subjectMajors =new ArrayList<>();
         for(SignSubject x : signSubject){
             subjectMajors.add(x.getSubjectMajor());
@@ -68,8 +66,28 @@ public class SubjectsControllers {
         for(SubjectMajor x : subjectMajors){
             subjects.add(x.getSubject());
         }
-        System.out.println(subjects.get(0).getSubjectID());
         return new ResponseEntity<>(subjects, HttpStatus.OK);
+    }
+    @GetMapping("/AllSubjectSignedByTermNear")
+    public ResponseEntity<?> GetAllSubjectSignedByTermNear(){
+        Student student = studentRepository.findAll().get(0);
+        Term term = termRepository.GetTermNear();
+        List<SignSubject> signSubject = signSubjectRepository.findAll();
+        List<SubjectMajor> subjectMajors =new ArrayList<>();
+        for(SignSubject x : signSubject){
+            subjectMajors.add(x.getSubjectMajor());
+        }
+
+        List<Subject> subjects = new ArrayList<>();
+        for(SubjectMajor x : subjectMajors){
+            subjects.add(x.getSubject());
+        }
+        return new ResponseEntity<>(subjects, HttpStatus.OK);
+    }
+    @GetMapping("/SubjectBySubjectCode/{SubjectCode}")
+    public ResponseEntity<?>  GetAllSubjectBySubjectCode(@PathVariable String SubjectCode){
+       Subject subject = subjectRepository.BinarySubject(SubjectCode);
+        return new ResponseEntity<>(subject, HttpStatus.OK);
     }
 
 }

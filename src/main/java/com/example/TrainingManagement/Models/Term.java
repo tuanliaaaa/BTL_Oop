@@ -1,6 +1,7 @@
 package com.example.TrainingManagement.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,9 +20,11 @@ public class Term {
     private Timestamp StartTimeSignCredit;
     private Timestamp EndTimeSignCredit;
     private int TermNumber;
+    @JsonIgnore
     @JsonBackReference
     @OneToMany(mappedBy = "Term", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<SignSubject> SignSubject;
+    @JsonIgnore
     @JsonBackReference
     @OneToMany(mappedBy = "Term", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Classsection> Classsection;

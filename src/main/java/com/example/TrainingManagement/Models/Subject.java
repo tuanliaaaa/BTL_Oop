@@ -1,6 +1,7 @@
 package com.example.TrainingManagement.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Subject {
     private Long SubjectID;
     private String SubjectCode;
     private String SubjectName;
+    @JsonIgnore
     @JsonBackReference
     @OneToMany(mappedBy = "Subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<SubjectMajor> SubjectMajor;
