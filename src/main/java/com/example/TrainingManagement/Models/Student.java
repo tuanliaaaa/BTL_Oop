@@ -1,6 +1,7 @@
 package com.example.TrainingManagement.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,7 +15,9 @@ public class Student {
     private Long StudentID;
     private String StudentName;
     private String StudentCode;
+    @JsonIgnore
     @OneToOne
+
     @JoinColumn(name = "AccountId")
     private Account Account;
     @JsonBackReference
