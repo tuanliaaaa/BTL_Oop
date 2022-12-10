@@ -10,18 +10,13 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ScheduleID;
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "ClassroomID", nullable = false)
-    private Classroom Classroom;
+    private String Classroom;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ClasssectionID", nullable = false)
     private Classsection Classsection;
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "StudytimeID", nullable = false)
-    private Studytime Studytime;
+
+    private String Studytime;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "StudyweekID", nullable = false)
