@@ -37,6 +37,16 @@ public interface SignSubjectRepository extends JpaRepository<SignSubject, Long> 
         return  signSubjects;
     }
 
+    public default List<SignSubject> findByStudent(Student student){
+        ArrayList<SignSubject> list = (ArrayList<SignSubject>) this.findAll();
+        ArrayList<SignSubject> signSubjects = new ArrayList<>();
+        list.forEach(signsubject -> {
+            if( signsubject.getStudent().equals(student)){
+                signSubjects.add(signsubject );
+            }
+        });
+        return  signSubjects;
+    }
     public default List<SignSubject> findByAll(Student student, Term term, SubjectMajor subjectMajor){
         ArrayList<SignSubject> list = (ArrayList<SignSubject>) this.findAll();
         ArrayList<SignSubject> signSubjects = new ArrayList<>();

@@ -1,17 +1,18 @@
 if (localStorage.getItem("Token") )
 {
-    GetTermUserSign();
+//    GetTermUserSign();
 }
 else
 {
-    localStorage.removeItem('Token');
-    window.location='/Account/Login';
+GetTermUserSign();
+//    localStorage.removeItem('Token');
+//    window.location='/Account/Login';
 }
-function LogOut()
-{
-    window.location="/Account/Login";
-    localStorage.removeItem('Token');
-}
+//function LogOut()
+//{
+//    window.location="/Account/Login";
+//    localStorage.removeItem('Token');
+//}
 
 function inNgay(date){
     var month =(date.getMonth()+1).toString();

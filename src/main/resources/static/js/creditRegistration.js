@@ -235,10 +235,11 @@ function PostCredit(credit){
         }
         else if(xhttp.status==404)
         {
+
             if(tokenResponse["message"]!="Môn đã được đăng kí")
             {
                 credit.checked=false;
-                alert(tokenResponse["message"]);
+                alert("trùng lich học");
             }
             else{
                 DeleteCredit(credit);

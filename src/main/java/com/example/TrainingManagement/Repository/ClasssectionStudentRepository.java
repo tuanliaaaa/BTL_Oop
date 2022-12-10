@@ -11,16 +11,16 @@ import java.util.List;
 
 @Repository
 public interface ClasssectionStudentRepository extends JpaRepository<ClasssectionStudent, Long> {
-//    @Override
-//    @SuppressWarnings("unchecked")
-//    default ClasssectionStudent save(ClasssectionStudent classsectionStudent)
-//    {
-//
-//        if(this.findByStudentAndClassection(classsectionStudent.getStudent(),classsectionStudent.getClasssection())==null){
-//            return saveAndFlush(classsectionStudent);
-//        }
-//        return classsectionStudent;
-//    }
+    @Override
+    @SuppressWarnings("unchecked")
+    default ClasssectionStudent save(ClasssectionStudent classsectionStudent)
+    {
+
+        if(this.findByAllStudentAndClassection(classsectionStudent.getStudent(),classsectionStudent.getClasssection()).isEmpty()){
+            return saveAndFlush(classsectionStudent);
+        }
+        return classsectionStudent;
+    }
     public default List<ClasssectionStudent> findByStudent(Student student){
         ArrayList<ClasssectionStudent> list = (ArrayList<ClasssectionStudent>) this.findAll();
         ArrayList<ClasssectionStudent> listRespon = new ArrayList<>();
@@ -41,4 +41,14 @@ public interface ClasssectionStudentRepository extends JpaRepository<Classsectio
         });
         return  listRespon.get(0);
     }
+    public  default List<ClasssectionStudent>findByAllStudentAndClassection(Student student , Classsection classsection){
+        ArrayList<ClasssectionStudent> list = (ArrayList<ClasssectionStudent>) this.findAll();
+        ArrayList<ClasssectionStudent> listRespon = new ArrayList<>();
+        list.forEach(classsectionStudent -> {
+        if(classsectionStudent.getStudent().equals(student)&&classsectionStudent.getClasssection().equals(classsection)){
+            listRespon.add(classsectionStudent);
+        }
+    });
+        return  listRespon;
+}
 }

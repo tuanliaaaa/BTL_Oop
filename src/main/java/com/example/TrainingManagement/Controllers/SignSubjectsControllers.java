@@ -1,5 +1,6 @@
 package com.example.TrainingManagement.Controllers;
 
+import com.example.TrainingManagement.DTO.DTOClasssectionResponse;
 import com.example.TrainingManagement.DTO.DTOSubject;
 import com.example.TrainingManagement.Models.*;
 import com.example.TrainingManagement.Repository.*;
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 
@@ -43,7 +47,7 @@ public class SignSubjectsControllers {
     public ResponseEntity<?> DeleteEmployee(@PathVariable String subjectCode) {
 
         Student student = studentRepository.findAll().get(0);
-        System.out.println("oke");
+
         Term term = termRepository.GetTermNowBySubject();
         String studentCode=student.getStudentCode().substring(5,7);
         Major major=majorRepository.findBymajorCode(studentCode);
@@ -52,5 +56,15 @@ public class SignSubjectsControllers {
         SignSubject signSubject =signSubjectRepository.findByAll(student,term,subjectMajor).get(0);
         signSubjectRepository.delete(signSubject);
         return new ResponseEntity<>("da xoa thanh cong", HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/AllClasssectionsTerm")
+    public ResponseEntity<?> GetAllClasssectionsTerm(){
+        Student student = studentRepository.findAll().get(0);
+        List<SignSubject> signSubjects =signSubjectRepository.findByStudent(student);
+        List<Term> terms =new ArrayList<>();
+        signSubjects.forEach(signSubject->{
+                terms.add(signSubject.getTerm());
+        });
+        return new ResponseEntity<>(terms, HttpStatus.OK);
     }
 }

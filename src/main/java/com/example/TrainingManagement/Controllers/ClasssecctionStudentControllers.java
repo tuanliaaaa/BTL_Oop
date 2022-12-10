@@ -1,5 +1,6 @@
 package com.example.TrainingManagement.Controllers;
 
+import ch.qos.logback.core.util.COWArrayList;
 import com.example.TrainingManagement.DTO.DTOClasssectioinStudentResponse;
 import com.example.TrainingManagement.DTO.DTOClasssection;
 import com.example.TrainingManagement.DTO.DTOSubject;
@@ -57,29 +58,39 @@ public class ClasssecctionStudentControllers {
         Student student = studentRepository.findAll().get(0);
         Term term = termRepository.GetTermNowByCredit();
         Classsection classsection =classsectionRepository.findByID(Long.parseLong(id));
+
         ClasssectionStudent classsectionStudent =classsectionStudentRepository.findByStudentAndClassection(student,classsection);
         classsectionStudentRepository.delete(classsectionStudent);
+        classsection.setQuantityReal(classsection.getQuantityReal()-1);
+        classsectionRepository.save(classsection);
         return new ResponseEntity<>("da xoa thanh cong", HttpStatus.NO_CONTENT);
     }
     @PostMapping("/ClasssectionStudents")
     public ResponseEntity<?> newStudent(@RequestBody DTOClasssection classsection) {
-
         Student student = studentRepository.findAll().get(0);
         Term term = termRepository.GetTermNowByCredit();
+        Classsection classsection1 = classsectionRepository.findByID(classsection.getClasssectionID());
+        //Liệt Kê lịch học của tất cả các môn đã có neeus có môn dki rồi thì thay đổi rồi mới cho vào
         List<ClasssectionStudent> classsectionStudents=classsectionStudentRepository.findByStudent(student);
         List<Classsection> classsections=new ArrayList<>();
+        final ClasssectionStudent[] classsectionStudentPop = {new ClasssectionStudent()};
         classsectionStudents.forEach(classsectionStudent -> {
-            classsections.add(classsectionStudent.getClasssection());
-        });
+            if(classsectionStudent.getClasssection().getSubjectMajor().equals(classsection1.getSubjectMajor())){
+                   classsectionStudentPop[0] = classsectionStudent;
+
+            }
+            else {
+                classsections.add(classsectionStudent.getClasssection());
+            }
+            });
         List<Schedule> schedules=new ArrayList<>();
-        classsections.forEach(classsection1 -> {
-            List<Schedule> schedules1 =scheduleRepository.findByClasssrction(classsection1);
-            schedules1.forEach(schedule ->{
+        classsections.forEach(classsection2 -> {
+            List<Schedule> schedules2 =scheduleRepository.findByClasssrction(classsection2);
+            schedules2.forEach(schedule ->{
                 schedules.add(schedule);
             } );
         });
         List<String> LessonListNow=new ArrayList<>();
-
         schedules.forEach(schedule ->{
             String a=schedule.getStudytime();
             String b="";
@@ -89,7 +100,8 @@ public class ClasssecctionStudentControllers {
                 LessonListNow.add(b);
             }
         });
-        Classsection classsection1 = classsectionRepository.findByID(classsection.getClasssectionID());
+//        Liệt kê lịch học của môn mới
+
         List<Schedule> schedules1 =scheduleRepository.findByClasssrction(classsection1);
         List<String> LessonListResponse=new ArrayList<>();
 
@@ -121,6 +133,7 @@ public class ClasssecctionStudentControllers {
         classsection1.setQuantityReal(classsection1.getQuantityReal()+1);
 
         classsectionStudentRepository.save(classsectionStudent);
+        classsectionStudentRepository.delete(classsectionStudentPop[0]);
         classsectionRepository.save(classsection1);
         return new ResponseEntity<>(classsectionStudents, HttpStatus.CREATED);
     }
